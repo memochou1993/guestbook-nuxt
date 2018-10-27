@@ -44,7 +44,7 @@
 		data() {
 			return {
 				url: process.env.baseUrl + '/signatures',
-				signatures: [],
+        signatures: [],
 				meta: {
 					current_page: 1,
 					first_text: '第一頁',
@@ -74,18 +74,26 @@
 			},
 			'meta.per_page': function() {
 				this.fetch()
-			}
+      }
 		},
 		created() {
       this.fetch()
 		},
+    asyncData({ app, env}) {
+      return app.$axios.get(`${env.baseUrl}/signatures`)
+        .then(({data}) => {
+          return {
+            signatures: data.data
+          }
+        })
+    },
 		methods: {
 			fetch() {
-				this.$axios.get(this.url + '?page=' + this.meta.current_page + '&per_page=' + this.meta.per_page)
+				this.$axios.get(`${this.url}?page=${this.meta.current_page}&per_page=${this.meta.per_page}`)
 					.then(({data}) => {
 						this.signatures = data.data
 						this.meta.total_rows = data.meta.total
-					})
+          })
 			},
 			destroy(id) {
 				if (confirm('確定刪除？')) {

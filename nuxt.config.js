@@ -4,7 +4,7 @@ module.exports = {
   mode: 'universal',
 
   env: {
-    baseUrl: process.env.BASE_URL || 'http://guestbook.test/api'
+    baseUrl: process.env.BASE_URL || 'http://guestbook.epoch.tw/api'
   },
 
   /*
